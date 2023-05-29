@@ -9,8 +9,9 @@ interface Expense {
 
 interface Props {
   expenses: Expense[];
+  onDelete: (id: number) => void;
 }
-const ExpenseList = ({ expenses }: Props) => {
+const ExpenseList = ({ expenses, onDelete }: Props) => {
   return (
     <div>
       <table className="table table-bordered">
@@ -26,10 +27,25 @@ const ExpenseList = ({ expenses }: Props) => {
               <td>{expense.description}</td>
               <td>{expense.amount}</td>
               <td>{expense.category}</td>
-              <td></td>
+              <td>
+                <button
+                  onClick={() => onDelete(expense.id)}
+                  className="btn btn-outline-danger"
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr>
+            <td>Total</td>
+            <td>{expenses.reduce((acc, exp) => acc + exp.amount, 0)}</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );
